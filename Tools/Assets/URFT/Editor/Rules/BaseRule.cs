@@ -42,7 +42,7 @@ namespace URFT
         public virtual void ApplyRule()
         {
             var fullPath = Application.dataPath + "/";
-
+            
             var a = AssetImporter.GetAtPath("Assets/Samples/Textures/01.png");
             if (a as TextureImporter)
             {
@@ -50,17 +50,22 @@ namespace URFT
             }
         }
         
-        public virtual void SaveRule()
+        public static void SaveRule(BaseRule pRule)
         {
-            var exampleAsset = CreateInstance<BaseRule>();
-
-            AssetDatabase.CreateAsset(exampleAsset, RuleManager.SavePath + RuleName +".asset");
+            AssetDatabase.CreateAsset(pRule, RuleManager.AssetsSavedPath + pRule.RuleName + ".asset");
             AssetDatabase.Refresh();
+            ResourceFormatWindow.Reload = true;
         }
 
         public static BaseRule LoadRule(string pRuleFileName)
         {
-            return AssetDatabase.LoadAssetAtPath<BaseRule>(RuleManager.SavePath + pRuleFileName);
+            return AssetDatabase.LoadAssetAtPath<BaseRule>(RuleManager.AssetsSavedPath + pRuleFileName);
+        }
+
+        public static List<string> LoadResPath(string pPath, bool pIncludeSubDir)
+        {
+            List<string> _List = new List<string>();
+            return _List;
         }
     }
 }
