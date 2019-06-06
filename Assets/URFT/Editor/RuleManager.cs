@@ -21,7 +21,9 @@ namespace URFT
             foreach (var s in R)
             {
                 string file = s.Substring(s.LastIndexOf("/", StringComparison.Ordinal) + 1);
-                sRules.Add(BaseRule.LoadRule(file));
+                var _Rule = BaseRule.LoadRule(file);
+                if(_Rule != null)
+                    sRules.Add(_Rule);
             }
         }
     }

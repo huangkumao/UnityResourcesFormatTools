@@ -7,7 +7,6 @@ namespace URFT
 {
     public enum RuleType
     {
-        None = 0,
         Tex = 1,    //贴图
         Model = 2,  //模型
     }

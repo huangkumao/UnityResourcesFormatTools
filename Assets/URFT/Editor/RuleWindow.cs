@@ -18,7 +18,7 @@ namespace URFT
 
             if (Rule == null)
             {
-                sRule = new BaseRule();
+                sRule = new TextureRule();
                 sNew = true;
             }
             else
@@ -27,7 +27,7 @@ namespace URFT
                 sNew = false;
             }
 
-            sWnd = GetWindowWithRect<RuleWindow>(new Rect(0, 0, 600, 500), false, sNew ? "CreateRule" : Rule.RuleName, true);
+            sWnd = GetWindowWithRect<RuleWindow>(new Rect(0, 0, 600, 500), false, sNew ? "CreateRule" : sRule.RuleName, true);
             sWnd.Show();
         }
 
@@ -97,7 +97,14 @@ namespace URFT
             EditorGUILayout.LabelField("包含子目录(IncludeSubDir) : ", EditorStyles.boldLabel, GUILayout.Width(180));
             sRule.IncludeSubDir = EditorGUILayout.Toggle("", sRule.IncludeSubDir);
             GUILayout.EndHorizontal();
-            
+
+            GUILayout.Label("-----------------------------------------------------------------------------------------------------------------------------");
+
+            if (sRule.RuleType == RuleType.Tex)
+                ShowTextureRule();
+            else if (sRule.RuleType == RuleType.Model)
+                ShowModelRule();
+
             GUILayout.EndScrollView();
             GUI.color = Color.blue;
             GUILayout.Label("-----------------------------------------------------------------------------------------------------------------------------");
@@ -118,6 +125,21 @@ namespace URFT
 
             EditorGUILayout.EndVertical();
             this.Repaint();
+        }
+
+        private void ShowTextureRule()
+        {
+//            sRule.
+//            //过滤关键字
+//            GUILayout.BeginHorizontal();
+//            EditorGUILayout.LabelField("过滤关键字(Filter) : ", EditorStyles.boldLabel, GUILayout.Width(120));
+//            sRule.Filter = EditorGUILayout.TextField(sRule.Filter);
+//            GUILayout.EndHorizontal();
+        }
+
+        private void ShowModelRule()
+        {
+
         }
     }
 }

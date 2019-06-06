@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -16,14 +17,14 @@ namespace URFT
 
     public class BaseRule : ScriptableObject
     {
+        [NonSerialized]
         public bool Selected = false;
+        [NonSerialized]
+        public RuleType RuleType = RuleType.Tex;
 
         [SerializeField]
         public string RuleName = "BaseRule";
-
-        [SerializeField]
-        public RuleType RuleType = RuleType.Tex;
-
+        
         [SerializeField]
         public string RulePath = "";
 
@@ -59,7 +60,20 @@ namespace URFT
 
         public static BaseRule LoadRule(string pRuleFileName)
         {
-            return AssetDatabase.LoadAssetAtPath<BaseRule>(RuleManager.AssetsSavedPath + pRuleFileName);
+            BaseRule _Rule = null;
+            var _obj = AssetDatabase.LoadAssetAtPath<ScriptableObject>(RuleManager.AssetsSavedPath + pRuleFileName);
+            if (_obj as TextureRule)
+            {
+                _Rule = (TextureRule) _obj;
+                _Rule.RuleType = RuleType.Tex;
+            }
+            else if (_obj as ModelRule)
+            {
+                _Rule = (ModelRule)_obj;
+                _Rule.RuleType = RuleType.Model;
+            }
+
+            return _Rule;
         }
 
         public static List<string> LoadResPath(string pPath, bool pIncludeSubDir)
